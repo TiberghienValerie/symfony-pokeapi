@@ -2,12 +2,10 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PokemonAttackRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass=PokemonAttackRepository::class)
  */
 class PokemonAttack
@@ -18,11 +16,6 @@ class PokemonAttack
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $lvlApprentissage;
 
     /**
      * @ORM\ManyToOne(targetEntity=Pokemon::class, inversedBy="attacks")
@@ -36,21 +29,14 @@ class PokemonAttack
      */
     private $attack;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $level;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLvlApprentissage(): ?int
-    {
-        return $this->lvlApprentissage;
-    }
-
-    public function setLvlApprentissage(int $lvlApprentissage): self
-    {
-        $this->lvlApprentissage = $lvlApprentissage;
-
-        return $this;
     }
 
     public function getPokemon(): ?Pokemon
@@ -73,6 +59,18 @@ class PokemonAttack
     public function setAttack(?Attack $attack): self
     {
         $this->attack = $attack;
+
+        return $this;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }

@@ -26,10 +26,8 @@ class Pokemon
      */
     private $name;
 
-
     /**
      * @ORM\Column(type="integer")
-     *
      */
     private $height;
 
@@ -46,10 +44,10 @@ class Pokemon
     /**
      * @ORM\Column(type="integer")
      */
-    private $orderPoke;
+    private $pokedexOrder;
 
     /**
-     * @ORM\ManyToMany(targetEntity=type::class, inversedBy="pokemons")
+     * @ORM\ManyToMany(targetEntity=Type::class, inversedBy="pokemons")
      */
     private $types;
 
@@ -61,7 +59,7 @@ class Pokemon
     public function __construct()
     {
         $this->types = new ArrayCollection();
-        $this->pokemonAttacks = new ArrayCollection();
+        $this->attacks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,7 +84,6 @@ class Pokemon
 
         return $this;
     }
-
 
     public function getHeight(): ?int
     {
@@ -124,27 +121,27 @@ class Pokemon
         return $this;
     }
 
-    public function getOrderPoke(): ?int
+    public function getPokedexOrder(): ?int
     {
-        return $this->orderPoke;
+        return $this->pokedexOrder;
     }
 
-    public function setOrderPoke(int $orderPoke): self
+    public function setPokedexOrder(int $pokedexOrder): self
     {
-        $this->orderPoke = $orderPoke;
+        $this->pokedexOrder = $pokedexOrder;
 
         return $this;
     }
 
     /**
-     * @return Collection|type[]
+     * @return Collection|Type[]
      */
     public function getTypes(): Collection
     {
         return $this->types;
     }
 
-    public function addType(type $type): self
+    public function addType(Type $type): self
     {
         if (!$this->types->contains($type)) {
             $this->types[] = $type;
@@ -153,7 +150,7 @@ class Pokemon
         return $this;
     }
 
-    public function removeType(type $type): self
+    public function removeType(Type $type): self
     {
         $this->types->removeElement($type);
 

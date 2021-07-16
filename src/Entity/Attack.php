@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AttackRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass=AttackRepository::class)
  */
 class Attack
@@ -22,14 +20,14 @@ class Attack
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $pokeapiId;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
 
     /**
      * @ORM\Column(type="integer")
@@ -47,7 +45,7 @@ class Attack
     private $power;
 
     /**
-     * @ORM\ManyToOne(targetEntity=type::class, inversedBy="attacks")
+     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="attacks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
@@ -67,18 +65,6 @@ class Attack
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getPokeapiId(): ?int
     {
         return $this->pokeapiId;
@@ -87,6 +73,18 @@ class Attack
     public function setPokeapiId(int $pokeapiId): self
     {
         $this->pokeapiId = $pokeapiId;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
@@ -127,12 +125,12 @@ class Attack
         return $this;
     }
 
-    public function getType(): ?type
+    public function getType(): ?Type
     {
         return $this->type;
     }
 
-    public function setType(?type $type): self
+    public function setType(?Type $type): self
     {
         $this->type = $type;
 

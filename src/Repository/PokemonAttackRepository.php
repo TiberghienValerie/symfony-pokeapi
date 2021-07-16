@@ -20,7 +20,7 @@ class PokemonAttackRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Pokemonattack[] Returns an array of Pokemonattack objects
+    //  * @return PokemonAttack[] Returns an array of PokemonAttack objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class PokemonAttackRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Pokemonattack
+    public function findOneBySomeField($value): ?PokemonAttack
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
