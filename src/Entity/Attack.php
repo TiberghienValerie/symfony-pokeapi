@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AttackRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,6 +51,16 @@ class Attack
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PokemonAttack::class, mappedBy="Attack")
+     */
+    private $pokemonAttacks;
+
+    public function __construct()
+    {
+        $this->pokemonAttacks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -123,6 +135,36 @@ class Attack
     public function setType(?type $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PokemonAttack[]
+     */
+    public function getPokemonAttacks(): Collection
+    {
+        return $this->pokemonAttacks;
+    }
+
+    public function addPokemonAttack(PokemonAttack $pokemonAttack): self
+    {
+        if (!$this->pokemonAttacks->contains($pokemonAttack)) {
+            $this->pokemonAttacks[] = $pokemonAttack;
+            $pokemonAttack->setAttack($this);
+        }
+
+        return $this;
+    }
+
+    public function removePokemonAttack(PokemonAttack $pokemonAttack): self
+    {
+        if ($this->pokemonAttacks->removeElement($pokemonAttack)) {
+            // set the owning side to null (unless already changed)
+            if ($pokemonAttack->getAttack() === $this) {
+                $pokemonAttack->setAttack(null);
+            }
+        }
 
         return $this;
     }
