@@ -25,16 +25,16 @@ class PokemonAttack
     private $lvlApprentissage;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Pokemon::class, inversedBy="pokemonAttacks")
+     * @ORM\ManyToOne(targetEntity=Pokemon::class, inversedBy="attacks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $pokemon;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Attack::class, inversedBy="pokemonAttacks")
+     * @ORM\ManyToOne(targetEntity=Attack::class, inversedBy="pokemons")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Attack;
+    private $attack;
 
     public function getId(): ?int
     {
@@ -67,12 +67,12 @@ class PokemonAttack
 
     public function getAttack(): ?Attack
     {
-        return $this->Attack;
+        return $this->attack;
     }
 
-    public function setAttack(?Attack $Attack): self
+    public function setAttack(?Attack $attack): self
     {
-        $this->Attack = $Attack;
+        $this->attack = $attack;
 
         return $this;
     }

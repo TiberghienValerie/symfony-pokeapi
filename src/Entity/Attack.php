@@ -53,13 +53,13 @@ class Attack
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity=PokemonAttack::class, mappedBy="Attack")
+     * @ORM\OneToMany(targetEntity=PokemonAttack::class, mappedBy="attack", orphanRemoval=true)
      */
-    private $pokemonAttacks;
+    private $pokemons;
 
     public function __construct()
     {
-        $this->pokemonAttacks = new ArrayCollection();
+        $this->pokemons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,27 +142,27 @@ class Attack
     /**
      * @return Collection|PokemonAttack[]
      */
-    public function getPokemonAttacks(): Collection
+    public function getPokemons(): Collection
     {
-        return $this->pokemonAttacks;
+        return $this->pokemons;
     }
 
-    public function addPokemonAttack(PokemonAttack $pokemonAttack): self
+    public function addPokemon(PokemonAttack $pokemon): self
     {
-        if (!$this->pokemonAttacks->contains($pokemonAttack)) {
-            $this->pokemonAttacks[] = $pokemonAttack;
-            $pokemonAttack->setAttack($this);
+        if (!$this->pokemons->contains($pokemon)) {
+            $this->pokemons[] = $pokemon;
+            $pokemon->setAttack($this);
         }
 
         return $this;
     }
 
-    public function removePokemonAttack(PokemonAttack $pokemonAttack): self
+    public function removePokemon(PokemonAttack $pokemon): self
     {
-        if ($this->pokemonAttacks->removeElement($pokemonAttack)) {
+        if ($this->pokemons->removeElement($pokemon)) {
             // set the owning side to null (unless already changed)
-            if ($pokemonAttack->getAttack() === $this) {
-                $pokemonAttack->setAttack(null);
+            if ($pokemon->getAttack() === $this) {
+                $pokemon->setAttack(null);
             }
         }
 

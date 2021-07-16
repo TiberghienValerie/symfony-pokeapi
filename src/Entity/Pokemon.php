@@ -16,7 +16,7 @@ class Pokemon
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -26,10 +26,6 @@ class Pokemon
      */
     private $name;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $pokeapiId;
 
     /**
      * @ORM\Column(type="integer")
@@ -53,24 +49,30 @@ class Pokemon
     private $orderPoke;
 
     /**
-     * @ORM\ManyToMany(targetEntity=type::class, inversedBy="pokemon")
+     * @ORM\ManyToMany(targetEntity=type::class, inversedBy="pokemons")
      */
-    private $type;
+    private $types;
 
     /**
-     * @ORM\OneToMany(targetEntity=PokemonAttack::class, mappedBy="pokemon")
+     * @ORM\OneToMany(targetEntity=PokemonAttack::class, mappedBy="pokemon", orphanRemoval=true)
      */
-    private $pokemonAttacks;
+    private $attacks;
 
     public function __construct()
     {
-        $this->type = new ArrayCollection();
+        $this->types = new ArrayCollection();
         $this->pokemonAttacks = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getName(): ?string
@@ -85,17 +87,6 @@ class Pokemon
         return $this;
     }
 
-    public function getPokeapiId(): ?int
-    {
-        return $this->pokeapiId;
-    }
-
-    public function setPokeapiId(int $pokeapiId): self
-    {
-        $this->pokeapiId = $pokeapiId;
-
-        return $this;
-    }
 
     public function getHeight(): ?int
     {
@@ -148,15 +139,15 @@ class Pokemon
     /**
      * @return Collection|type[]
      */
-    public function getType(): Collection
+    public function getTypes(): Collection
     {
-        return $this->type;
+        return $this->types;
     }
 
     public function addType(type $type): self
     {
-        if (!$this->type->contains($type)) {
-            $this->type[] = $type;
+        if (!$this->types->contains($type)) {
+            $this->types[] = $type;
         }
 
         return $this;
@@ -164,7 +155,7 @@ class Pokemon
 
     public function removeType(type $type): self
     {
-        $this->type->removeElement($type);
+        $this->types->removeElement($type);
 
         return $this;
     }
@@ -172,27 +163,27 @@ class Pokemon
     /**
      * @return Collection|PokemonAttack[]
      */
-    public function getPokemonAttacks(): Collection
+    public function getAttacks(): Collection
     {
-        return $this->pokemonAttacks;
+        return $this->attacks;
     }
 
-    public function addPokemonAttack(PokemonAttack $pokemonAttack): self
+    public function addAttack(PokemonAttack $attack): self
     {
-        if (!$this->pokemonAttacks->contains($pokemonAttack)) {
-            $this->pokemonAttacks[] = $pokemonAttack;
-            $pokemonAttack->setPokemon($this);
+        if (!$this->attacks->contains($attack)) {
+            $this->attacks[] = $attack;
+            $attack->setPokemon($this);
         }
 
         return $this;
     }
 
-    public function removePokemonAttack(PokemonAttack $pokemonAttack): self
+    public function removeAttack(PokemonAttack $attack): self
     {
-        if ($this->pokemonAttacks->removeElement($pokemonAttack)) {
+        if ($this->attacks->removeElement($attack)) {
             // set the owning side to null (unless already changed)
-            if ($pokemonAttack->getPokemon() === $this) {
-                $pokemonAttack->setPokemon(null);
+            if ($attack->getPokemon() === $this) {
+                $attack->setPokemon(null);
             }
         }
 
