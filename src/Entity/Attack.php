@@ -2,19 +2,31 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AttackRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\OrderFilter;
 
 /**
  * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"},
  *     normalizationContext={
  *          "groups"={"attack:get"}
  *     }
  * )
+ * @ApiFilter(RangeFilter::class, properties={"pp", "accuracy", "power"})
+ * @ApiFilter(SearchFilter::class, properties={"name"="partial", "type.name"="partial", "pokemons.name"="partial"})
+ * @ApiFilter(NumericFilter::class, properties={"pokeapiId"})
+ * @ApiFilter(OrderFilter::class, properties={"id"="asc"})
+ *
  * @ORM\Entity(repositoryClass=AttackRepository::class)
  */
 class Attack

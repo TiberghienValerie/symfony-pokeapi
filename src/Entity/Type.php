@@ -2,19 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\OrderFilter;
 
 /**
  * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"},
  *     normalizationContext={
  *          "groups"={"type:get"}
  *     }
  * )
+ * @ApiFilter(SearchFilter::class, properties={"name"="partial", "pokemons.name"="partial", "attacks.name"="partial"})
+ * @ApiFilter(OrderFilter::class, properties={"id"="asc"})
+ *
  * @ORM\Entity(repositoryClass=TypeRepository::class)
  */
 class Type

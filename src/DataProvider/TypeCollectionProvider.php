@@ -12,7 +12,6 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class TypeCollectionProvider extends CollectionDataProvider
 {
-
     private TypeApi $typeApi;
 
     public function __construct(TypeApi $typeApi, ManagerRegistry $managerRegistry, iterable $collectionExtensions = [])
@@ -24,12 +23,13 @@ class TypeCollectionProvider extends CollectionDataProvider
 
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
     {
-       return Type::class === $resourceClass;
+       //return Type::class === $resourceClass;
+        return false;
     }
 
     public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
     {
-        $this->typeApi->getTypes();
+        //$this->typeApi->getTypes();
         return parent::getCollection($resourceClass, $operationName, $context);
     }
 

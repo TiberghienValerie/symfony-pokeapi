@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PokemonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,13 +10,31 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\OrderFilter;
+
 
 /**
  * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context"={
+ *                  "groups"={"pokemon:get_lite"}
+ *              }
+ *          }
+ *      },
+ *     itemOperations={"get"},
  *     normalizationContext={
  *          "groups"={"pokemon:get"}
  *     }
  * )
+ * @ApiFilter(RangeFilter::class, properties={"height", "weight", "baseexperience"})
+ * @ApiFilter(SearchFilter::class, properties={"name"="partial", "types.name"="partial", "attacks.name"="partial"})
+ * @ApiFilter(NumericFilter::class, properties={"pokedexOrder"})
+ * @ApiFilter(OrderFilter::class, properties={"id"="asc"})
+ *
  * @ORM\Entity(repositoryClass=PokemonRepository::class)
  */
 class Pokemon
@@ -24,37 +43,37 @@ class Pokemon
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\Column(type="integer")
-     * @Groups({"pokemon:get"})
+     * @Groups({"pokemon:get", "pokemon:get_lite"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"pokemon:get"})
+     * @Groups({"pokemon:get", "pokemon:get_lite"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"pokemon:get"})
+     * @Groups({"pokemon:get", "pokemon:get_lite"})
      */
     private $height;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"pokemon:get"})
+     * @Groups({"pokemon:get", "pokemon:get_lite"})
      */
     private $weight;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"pokemon:get"})
+     * @Groups({"pokemon:get", "pokemon:get_lite"})
      */
     private $baseExperience;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"pokemon:get"})
+     * @Groups({"pokemon:get", "pokemon:get_lite"})
      */
     private $pokedexOrder;
 

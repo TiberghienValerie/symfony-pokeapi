@@ -24,12 +24,13 @@ class PokemonCollectionProvider extends CollectionDataProvider
 
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
     {
-       return Pokemon::class === $resourceClass;
+       //return Pokemon::class === $resourceClass;
+        return false;
     }
 
     public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
     {
-        $this->pokemonApi->getPokemons();
+       // $this->pokemonApi->getPokemons();
         return parent::getCollection($resourceClass, $operationName, $context);
     }
 
