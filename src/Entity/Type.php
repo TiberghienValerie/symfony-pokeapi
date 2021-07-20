@@ -20,7 +20,7 @@ use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\OrderFilter;
  *          "groups"={"type:get"}
  *     }
  * )
- * @ApiFilter(SearchFilter::class, properties={"name"="partial", "pokemons.name"="partial", "attacks.name"="partial"})
+ * @ApiFilter(SearchFilter::class, properties={"name"="partial", "pokemons.pokemon.name"="partial", "attacks.attack.name"="partial"})
  * @ApiFilter(OrderFilter::class, properties={"id"="asc"})
  *
  * @ORM\Entity(repositoryClass=TypeRepository::class)

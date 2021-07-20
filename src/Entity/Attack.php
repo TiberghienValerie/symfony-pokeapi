@@ -23,7 +23,7 @@ use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\OrderFilter;
  *     }
  * )
  * @ApiFilter(RangeFilter::class, properties={"pp", "accuracy", "power"})
- * @ApiFilter(SearchFilter::class, properties={"name"="partial", "type.name"="partial", "pokemons.name"="partial"})
+ * @ApiFilter(SearchFilter::class, properties={"name"="partial", "type.name"="partial", "pokemons.pokemon.name"="partial"})
  * @ApiFilter(NumericFilter::class, properties={"pokeapiId"})
  * @ApiFilter(OrderFilter::class, properties={"id"="asc"})
  *
