@@ -31,7 +31,7 @@ use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\OrderFilter;
  *     }
  * )
  * @ApiFilter(RangeFilter::class, properties={"height", "weight", "baseexperience"})
- * @ApiFilter(SearchFilter::class, properties={"name"="partial", "types.name"="partial", "attacks.name"="partial"})
+ * @ApiFilter(SearchFilter::class, properties={"name"="partial", "types.name"="partial", "attacks.attack.name"="partial"})
  * @ApiFilter(NumericFilter::class, properties={"pokedexOrder"})
  * @ApiFilter(OrderFilter::class, properties={"id"="asc"})
  *
